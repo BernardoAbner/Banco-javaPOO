@@ -42,10 +42,10 @@ public class GerenciadorClientes {
 			System.out.println("Cliente adicionado com sucesso!!!");
 	}
 	
-	public Clientes buscarCliente(String cpf) {
-		for (Clientes i : listaClientes) {
-			if (i.getCpf().equals(cpf)) {
-				i.mostrarDados();;
+	public Clientes buscarCliente(final String cpf) {
+		for (Clientes cliente: listaClientes) {
+			if (cliente.getCpf().equals(cpf)) {
+				return cliente;
 			}
 		}
 	return null;
@@ -70,17 +70,19 @@ public class GerenciadorClientes {
 		}
 	}
 		
-	public void mostrarCliente(String cpf) {
+	public void mostrarCliente() {
 		System.out.println("Insira o cpf do cliente para mostrar informações: ");
-		cpf = scanner.nextLine();
+		String cpf = scanner.nextLine();
 		buscarCliente(cpf);
 		}
 	
-	public void apagarCliente(String cpf) {
+	public void apagarCliente() {
 		System.out.println("Insira o cpf do cliente que deseja apagar: ");
-		cpf = scanner.nextLine();
+		String cpf = scanner.nextLine();
+		
 		for (Clientes cliente : listaClientes) {
 			int cont = 0;
+			
 			if (cliente.getCpf().equals(cpf)) {
 				listaClientes.remove(cliente);
 				cont ++;
@@ -89,7 +91,7 @@ public class GerenciadorClientes {
 				System.out.println("Nenhum cliente com o cpf " + cpf +" foi encontrado em nosso sistema.");
 			}
 			else {
-				System.out.println("O cliente "+ cliente + "foi excluido com sucesso!");
+				System.out.println("O cliente "+ cliente.getNome() + "foi excluido com sucesso!");
 			}
 			return;
 		}
@@ -98,12 +100,12 @@ public class GerenciadorClientes {
 		
 	}
 	
-	public void alterarInformacao(String cpf) {
+	public void alterarInformacao() {
 		System.out.println("Insira o CPF do cliente que deseja alterar informações: ");
-		cpf = scanner.nextLine();
+		String cpf = scanner.nextLine();
 		for (Clientes cliente : listaClientes) {
 			if (cliente.getCpf().equals(cpf)) {
-				mostrarCliente(cpf);
+				mostrarCliente();
 				System.out.println("Qual informação deseja alterar?\n"
 								 + "1. Nome\n"
 								 + "2. CPF\n"
@@ -175,7 +177,7 @@ public class GerenciadorClientes {
 			}
 			
 			else if(menuGerencia == 2) {
-				mostrarCliente(null);
+				mostrarCliente();
 			}
 			
 			else if (menuGerencia == 3) {
@@ -183,14 +185,18 @@ public class GerenciadorClientes {
 			}
 			
 			else if (menuGerencia == 4) {
-				apagarCliente(null);
+				apagarCliente();
+			}
+			else if (menuGerencia == 5) {
+				alterarInformacao();
 			}
 			System.out.println("### GERÊNCIA ###\n"
 					 + "O que deseja executar?\n"
 			  		 + "1. Listar clientes\n"
 			  		 + "2. Mostrar dados de um cliente específico\n"
-			  		 + "3. Adicionar cliente\n"
+			  		 + "3. Adiciionar clientes\n"
 			  		 + "4. Apagar cliente\n"
+			  		 + "5. Alterar informação do cliente\n"
 			  		 + "0. Sair");
 		   menuGerencia = scanner.nextInt();
 		}
