@@ -163,8 +163,9 @@ public class GerenciadorClientes {
 						 + "O que deseja executar?\n"
 				  		 + "1. Listar clientes\n"
 				  		 + "2. Mostrar dados de um cliente específico\n"
-				  		 + "3. Adicionar cliente\n"
-				  		 + "4. Apagar cliente\n"
+				  		 + "3. Alterar informações\n"
+				  		 + "4. Adicionar cliente\n"
+				  		 + "5. Apagar cliente\n"
 				  		 + "0. Sair");
 		int menuGerencia = scanner.nextInt();
 		
