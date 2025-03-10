@@ -10,10 +10,14 @@ public class Clientes {
 	public void setNome(String novoNome){
 		this.nome = novoNome;
 }
-
+	public String getNome() {
+		return nome;
+	}
+	
 	public void setCpf(String novoCpf) {
 		this.cpf = novoCpf;
 }
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -21,18 +25,30 @@ public class Clientes {
 	public void setDataNascimento(String novaDataNascimento) {
 		this.dataNascimento = novaDataNascimento;
 }
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
 
 	public void setSexo(String novoSexo) {
 		this.sexo = novoSexo;
 }
+	public String getSexo() {
+		return sexo;
+	}
 
 	public void setTelefone(String novoTelefone) {
 		this.telefone = novoTelefone;
 }
+	public String getTelefone() {
+		return telefone;
+	}
 
 	public void setEmail(String novoEmail) {
 		this.email = novoEmail;
 }
+	public String getEmail() {
+		return email;
+	}
 	
 	public void mostrarDados() {
 		System.out.println("Nome: " + nome);
