@@ -18,7 +18,7 @@ public class Banco {
 		
 		while(menu != 0) {			
 			if (menu == 1) {
-				gerenciador.adicionarCliente();
+				
 			}
 			else if (menu == 2) {
 				
