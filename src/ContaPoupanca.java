@@ -1,4 +1,5 @@
 
-public class ContaPoupanca {
+
+public class ContaPoupanca extends Contas {
 
 }
