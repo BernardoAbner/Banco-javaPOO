@@ -5,7 +5,9 @@ public class Banco {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		GerenciadorClientes gerenciador = new GerenciadorClientes();		
+		GerenciadorClientes gerenciador = new GerenciadorClientes();	
+		ContaCorrente corrente = new ContaCorrente();
+		ContaPoupanca poupanca = new ContaPoupanca();
 		
 		System.out.println("### SEJA BEM-VINDO ###\n"
 						 + "Qual função deseja realizar?\n"

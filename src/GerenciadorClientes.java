@@ -47,6 +47,7 @@ public class GerenciadorClientes {
 			if (cliente.getCpf().equals(cpf)) {
 				return cliente;
 			}
+			cliente.mostrarDados();
 		}
 	return null;
 	}
@@ -108,11 +109,10 @@ public class GerenciadorClientes {
 				mostrarCliente();
 				System.out.println("Qual informação deseja alterar?\n"
 								 + "1. Nome\n"
-								 + "2. CPF\n"
-								 + "3. Data de Nascimento\n"
-								 + "4. Sexo\n"
-								 + "5. Telefone\n"
-								 + "6. Email\n"
+								 + "2. Data de Nascimento\n"
+								 + "3. Sexo\n"
+								 + "4. Telefone\n"
+								 + "5. Email\n"
 								 + "0. Sair");
 				int subMenu = scanner.nextInt();
 				
@@ -120,10 +120,6 @@ public class GerenciadorClientes {
 				if (subMenu == 1) {
 					System.out.println("O nome atual é " + cliente.getNome() + " insira o nome para qual deseja alterar: ");
 					cliente.setNome(scanner.nextLine());
-				}
-				else if(subMenu == 2) {
-					System.out.println("O CPF atual é "+ cliente.getCpf() + " insira o cpf para qual deseja alterar: ");
-					cliente.setCpf(scanner.nextLine());
 				}
 				else if (subMenu == 3) {
 					System.out.println("A data de nascimento atual é: "+ cliente.getDataNascimento() + " insira a data de nascimento para a qual deseja alterar: ");
@@ -144,11 +140,10 @@ public class GerenciadorClientes {
 				
 				System.out.println("Qual informação deseja alterar?\n"
 						 + "1. Nome\n"
-						 + "2. CPF\n"
-						 + "3. Data de Nascimento\n"
-						 + "4. Sexo\n"
-						 + "5. Telefone\n"
-						 + "6. Email\n"
+						 + "2. Data de Nascimento\n"
+						 + "3. Sexo\n"
+						 + "4. Telefone\n"
+						 + "5. Email\n"
 						 + "0. Sair");
 				subMenu = scanner.nextInt();
 				
@@ -203,6 +198,7 @@ public class GerenciadorClientes {
 
 		
 	}
+
 		
 		
 	}
