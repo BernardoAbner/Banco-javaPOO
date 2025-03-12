@@ -1,12 +1,19 @@
 import java.util.Scanner;
 
-public abstract class Contas {
+public class Contas {
 
 	Scanner scanner = new Scanner(System.in);
+	GerenciadorClientes gerenciador = new GerenciadorClientes();
 	
-	private double valor;
-	private double saldo;
-	private int contaDestino;
+	
+	protected double valor;
+	protected double saldo;
+	protected int contaDestino;
+	protected String senha;
+	protected String numeroConta;
+	protected Clientes titular;	
+	
+		
 	
 	
 	public void setValor(double novoValor) {
@@ -28,13 +35,37 @@ public abstract class Contas {
 	public void setContaDestino(int novaContaDestino) {
 		this.contaDestino = novaContaDestino;
 	}	
+	
+	public int getContaDestino() {
+		return contaDestino;
+	}
 
-		public void sacar() {
+	public void setSenha(String novaSenha) {
+		this.senha = novaSenha;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setNumeroConta(String novoNumeroConta) {
+		this.numeroConta = novoNumeroConta;
+	}
+	
+	public String getNumeroConta() {
+		return numeroConta;
+	}
+	
+	public void setTitular(Clientes clientes) {
+		this.titular = clientes;
+	}
+	
+	public void sacar() {
 			System.out.println("Insira o valor que deseja movimentar: ");
 			setValor(scanner.nextDouble());
 			
-			if(getValor() > getSaldo()) {
-				System.out.println("O valor de movimentação é maior que o saldo. Por favor insira um valor dentro do seu limite.");
+			if(getValor() > getSaldo() || getValor() <= 0){
+				System.out.println("O valor de movimentação é maior que o saldo ou o valor é inválido.");
 				System.out.println("O saldo atual: "+ getSaldo());
 			}
 			else {
@@ -43,23 +74,28 @@ public abstract class Contas {
 			}
 			
 		}
-		public void depositar() {
+	public void depositar() {
 			System.out.println("Insira o número da conta em que deseja depositar o dinheiro: ");
+			setContaDestino(scanner.nextInt());
 			
 			System.out.println("Insira o valor que deseja depositar: ");
 			setValor(scanner.nextDouble());
 			
+			if(valor > 0) {
+			
 			setSaldo(getSaldo() + getValor());
 			System.out.println("O valor após o depósito: " + getSaldo());
+			}
+			else {
+				System.out.println("Valor inválido.");
+			}
 		}
 		
-		public void transferir() {
+	public void transferir() {
 			sacar();
-			
+			depositar();
 		}
 		
-	}
-
-	
+}
 	
 
