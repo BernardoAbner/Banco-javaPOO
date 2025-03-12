@@ -6,6 +6,8 @@ public class GerenciadorClientes {
 	private ArrayList<Clientes> listaClientes = new ArrayList<>();
 	private Scanner scanner = new Scanner(System.in);
 	
+	GerenciadorContas gerenciadorConta = new GerenciadorContas();
+	
 	public void adicionarCliente(){
 			System.out.println("Insira o seu CPF: ");
 			String cpf = scanner.nextLine();
@@ -53,7 +55,7 @@ public class GerenciadorClientes {
 	}
 	
 	public void listarClientes() {
-		for (Clientes i : listaClientes) {
+		for (Clientes cliente : listaClientes) {
 			if (listaClientes.isEmpty()) {
 				System.out.println("Nenhum cliente cadastrado até o momento. Deseja cadastrar um novo?\n"
 				+"1. Sim\n"
@@ -67,7 +69,7 @@ public class GerenciadorClientes {
 				}
 				return;
 			}
-			i.mostrarDados();
+			cliente.mostrarDados();
 		}
 	}
 		
@@ -86,13 +88,6 @@ public class GerenciadorClientes {
 			
 			if (cliente.getCpf().equals(cpf)) {
 				listaClientes.remove(cliente);
-				cont ++;
-			}
-			if (cont == 0) {
-				System.out.println("Nenhum cliente com o cpf " + cpf +" foi encontrado em nosso sistema.");
-			}
-			else {
-				System.out.println("O cliente "+ cliente.getNome() + "foi excluido com sucesso!");
 			}
 			return;
 		}
@@ -163,6 +158,10 @@ public class GerenciadorClientes {
 				  		 + "3. Alterar informações\n"
 				  		 + "4. Adicionar cliente\n"
 				  		 + "5. Apagar cliente\n"
+				  		 + "6. Listar contas\n"
+				  		 + "7. Mostrar dados de uma conta específicar\n"
+				  		 + "8. Adicionar conta\n"
+				  		 + "9. Apagar conta\n"
 				  		 + "0. Sair");
 		int menuGerencia = scanner.nextInt();
 		
@@ -171,7 +170,7 @@ public class GerenciadorClientes {
 				listarClientes();
 			}
 			
-			else if(menuGerencia == 2) {
+			else if (menuGerencia == 2) {
 				mostrarCliente();
 			}
 			
@@ -185,6 +184,23 @@ public class GerenciadorClientes {
 			else if (menuGerencia == 5) {
 				alterarInformacao();
 			}
+			else if (menuGerencia == 6 ) {
+				gerenciadorConta.listarContas();
+			}
+			else if (menuGerencia == 7) {
+				gerenciadorConta.conta.mostrarConta();
+			}
+			else if (menuGerencia == 8) {
+				gerenciadorConta.criarConta();
+			}
+			else if (menuGerencia == 9) {
+				gerenciadorConta.apagarConta();
+			}
+			
+			else {
+				System.out.println("Opção inválida! Insira uma opção dentro do intervalo especificado: ");
+			}
+			
 			System.out.println("### GERÊNCIA ###\n"
 					 + "O que deseja executar?\n"
 			  		 + "1. Listar clientes\n"

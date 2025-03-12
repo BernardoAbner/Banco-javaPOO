@@ -5,7 +5,8 @@ public class Banco {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		GerenciadorClientes gerenciador = new GerenciadorClientes();	
+		GerenciadorClientes gerenciadorClientes = new GerenciadorClientes();	
+		GerenciadorContas gerenciadorContas = new GerenciadorContas();
 		ContaCorrente corrente = new ContaCorrente();
 		ContaPoupanca poupanca = new ContaPoupanca();
 		
@@ -14,22 +15,25 @@ public class Banco {
 						 + "1. Criar conta\n"
 						 + "2. Entrar na conta\n"
 						 + "3. Entrar como gerente\n"
-						 + "4. Encerrar conta\n"
 						 + "0. Sair");
 		int menu = scanner.nextInt();
 		
 		while(menu != 0) {			
 			if (menu == 1) {
+				gerenciadorContas.criarConta();
 				
 			}
 			else if (menu == 2) {
+				gerenciadorContas.loginConta();
 				
 			}
 			else if (menu == 3) {
-				gerenciador.contaGerente();
+				gerenciadorClientes.contaGerente();
 
 			}
-			
+			else {
+				System.out.println("Opção inválida! insira uma opção dentro do intervalo solicitado.");
+			}
 			
 			System.out.println("### SEJA BEM-VINDO ###\n"
 					 + "Qual função deseja realizar?\n"
@@ -38,7 +42,7 @@ public class Banco {
 					 + "3. Entrar como gerente\n"
 					 + "4. Encerrar conta\n"
 					 + "0. Sair");
-	menu = scanner.nextInt();
+			menu = scanner.nextInt();
 			
 		}
 

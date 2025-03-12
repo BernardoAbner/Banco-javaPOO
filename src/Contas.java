@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class Contas {
 
 	Scanner scanner = new Scanner(System.in);
-	GerenciadorClientes gerenciador = new GerenciadorClientes();
+	GerenciadorClientes gerenciadorCliente = new GerenciadorClientes();
+	Clientes cliente = new Clientes();
 	
 	
 	protected double valor;
@@ -12,9 +13,7 @@ public class Contas {
 	protected String senha;
 	protected String numeroConta;
 	protected Clientes titular;	
-	
 		
-	
 	
 	public void setValor(double novoValor) {
 		this.valor = novoValor;
@@ -95,6 +94,14 @@ public class Contas {
 			sacar();
 			depositar();
 		}
+	
+	public void mostrarConta() { 
+		System.out.println("Saldo da conta: "+ saldo);
+		System.out.println("Numero da conta é: "+ numeroConta);
+		System.out.println("O Titular da conta é: "+ cliente.getNome());
+			
+	}
+	
 		
 }
 	
