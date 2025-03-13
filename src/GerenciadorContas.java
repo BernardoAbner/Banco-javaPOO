@@ -4,7 +4,16 @@ import java.util.ArrayList;
 public class GerenciadorContas {
 	Scanner scanner = new Scanner(System.in);
 	
-	GerenciadorClientes gerenciadorClientes = new GerenciadorClientes();
+	private GerenciadorClientes gerenciadorCliente;
+	
+	public GerenciadorContas() {
+	
+	}
+	
+	public void setGerenciadorClientes(GerenciadorClientes gerenciadorCliente) {
+		this.gerenciadorCliente = gerenciadorCliente;
+	}
+	
 	Contas conta = new Contas();
 	Clientes cliente = new Clientes();
 	
@@ -13,7 +22,7 @@ public class GerenciadorContas {
 	ArrayList<Contas> listaContas = new ArrayList<>();
 	
 	private String senha;
-	private String cpf;
+
 	
 	public void criarConta() {
 		System.out.println("Seja bem vindo! Você ja possui cadastro como cliente?\n"
@@ -21,50 +30,78 @@ public class GerenciadorContas {
 						 + "1. Sim\n"
 						 + "2. Não");
 		int menuCriarConta = scanner.nextInt();
+		scanner.nextLine();
+		
+		Clientes titular = null;
 		
 		if (menuCriarConta == 1) {
-			System.out.println("Insira uma senha para a sua conta: ");
-			senha = scanner.nextLine();
-			System.out.println("O seu login será a sua senha e o número da sua conta.");
+			System.out.println("Insira o seu cpf: ");
+			String cpf = scanner.nextLine();
+			titular = gerenciadorCliente.buscarCliente(cpf);
+			
+			if(titular == null) {
+				System.out.println("Cliente não encontrado. Por favor, cadastre o cliente primeiro. ");
+				return;
+			}
+		}
+		
+		else if (menuCriarConta == 2) {
+			System.out.println("Cadastrando um novo cliente...");
+			gerenciadorCliente.criarCliente();
 			
 			System.out.println("Insira o seu cpf: ");
-			cpf = scanner.nextLine();
+			String cpf = scanner.nextLine();
+			titular = gerenciadorCliente.buscarCliente(cpf);
 			
-			escolhaConta();
+			if (titular == null) {
+				System.out.println("Erro ao encontrar cliente. Tente novamente.");
+				return;
+			}
+			
+			
 		}
-	
-	}
-	
-	public void escolhaConta() {
+		else {
+			System.out.println("Opção inválida.");
+			return;
+		}
+		
+		System.out.println("Insira uma senha para a sua nova conta: ");
+		String senha = scanner.nextLine();
+			
+
 		System.out.println("Qual tipo de conta você deseja criar? \n"
 						 + "Escolha entre 1 e 2:\n"
 						 + "1. Conta Poupanca \n"
 						 + "2. Conta Corrente");
-		
 		int menuEscolhaConta = scanner.nextInt(); 
+		scanner.nextLine();
+		
 		if (menuEscolhaConta == 1) {
 			ContaPoupanca novaContaP = new ContaPoupanca();
 			novaContaP.setSenha(senha);
-			novaContaP.setTitular(gerenciadorClientes.buscarCliente(cpf));
-			conta.setNumeroConta(novaContaP.numeroContaP());
+			novaContaP.setTitular(titular);
+			novaContaP.setNumeroConta(novaContaP.numeroContaP());
 			novaContaP.setSaldo(0.0);
 			
 			listaContaP.add(novaContaP);
-			listaContas.addAll(listaContaP);
+			listaContas.add(novaContaP);
 			System.out.println("A conta foi criada com sucesso!");
 			
 		}
 		else if (menuEscolhaConta == 2) {
 			ContaCorrente novaContaC = new ContaCorrente();
 			novaContaC.setSenha(senha);
-			novaContaC.setTitular(gerenciadorClientes.buscarCliente(cpf));
-			conta.setNumeroConta(novaContaC.numeroContaC());
+			novaContaC.setTitular(titular);
+			novaContaC.setNumeroConta(novaContaC.numeroContaC());
 			novaContaC.setSaldo(0.0);
 			
 			listaContaC.add(novaContaC);
-			listaContas.addAll(listaContaC);
+			listaContas.add(novaContaC);	
 			System.out.println("A conta foi criada com sucesso!");
-			
+		}
+		
+		else {
+			System.out.println("Opção inválida.");
 		}
 	}
 	
@@ -86,6 +123,7 @@ public class GerenciadorContas {
 								 + "1. Sim\n"
 								 + "2. Não");
 				int subMenu = scanner.nextInt();
+				scanner.nextLine();
 				
 				if(subMenu == 1) {
 					criarConta();
@@ -104,19 +142,23 @@ public class GerenciadorContas {
 	public void loginConta() {
 		System.out.println("Insira o número da sua conta: ");
 		String numeroConta = scanner.nextLine();
-		for (Contas conta : listaContas) {
-			if(conta.getNumeroConta().equals(numeroConta)) {
+		Contas conta = buscarConta(numeroConta);
+		
+		
+			if(conta != null) {
 				System.out.println("Insira a sua senha: ");
 				String senha = scanner.nextLine();
 				if(conta.getSenha().equals(senha)) {
 					System.out.println("Login realizado com sucesso! ");
-					atividadesConta();
+					atividadesConta(conta);
 				}
 				else {
-					System.out.println("Login inválido.");
+					System.out.println("Senha inválida.");
 				}
+			} else {
+				System.out.println("Conta não encontrada. ");
 			}
-		}
+		
 	}
 
 	public void apagarConta() {
@@ -135,8 +177,8 @@ public class GerenciadorContas {
 	
 	
 	
-	public void atividadesConta() {
-		System.out.println("Seja muito bem vindo: "+ cliente.getNome());
+	public void atividadesConta(Contas conta) {
+		System.out.println("Seja muito bem vindo: "+ conta.getTitular().getNome());
 		
 		System.out.println("O que deseja executar?\n"
 						 + "Escolha entre 1 e 5 ou 0 para sair\n"
@@ -144,9 +186,10 @@ public class GerenciadorContas {
 						 + "2. Depositar\n"
 						 + "3. Transferir\n"
 						 + "4. Mostrar dados da conta\n"
-						 + "5: Apagar conta"
-						 + "0: Sair");
+						 + "5. Apagar conta\n"
+						 + "0. Sair");
 		int subMenu = scanner.nextInt();
+		scanner.nextLine();
 		
 		while(subMenu != 0) {
 			
@@ -174,9 +217,10 @@ public class GerenciadorContas {
 					 + "2. Depositar\n"
 					 + "3. Transferir\n"
 					 + "4. Mostrar dados da conta\n"
-					 + "5: Apagar conta"
-					 + "0: Sair");
+					 + "5. Apagar conta\n"
+					 + "0. Sair");
 			subMenu = scanner.nextInt();
+			scanner.nextLine();
 	
 		}
 		

@@ -6,9 +6,17 @@ public class GerenciadorClientes {
 	private ArrayList<Clientes> listaClientes = new ArrayList<>();
 	private Scanner scanner = new Scanner(System.in);
 	
-	GerenciadorContas gerenciadorConta = new GerenciadorContas();
+	private GerenciadorContas gerenciadorConta;
 	
-	public void adicionarCliente(){
+	public GerenciadorClientes(){
+		
+	}
+	
+	public void setGerenciadorConta(GerenciadorContas gerenciadorConta) {
+		this.gerenciadorConta = gerenciadorConta;	
+	}
+	
+	public void criarCliente(){
 			System.out.println("Insira o seu CPF: ");
 			String cpf = scanner.nextLine();
 			if (buscarCliente(cpf) != null) {
@@ -49,57 +57,65 @@ public class GerenciadorClientes {
 			if (cliente.getCpf().equals(cpf)) {
 				return cliente;
 			}
-			cliente.mostrarDados();
 		}
 	return null;
 	}
 	
 	public void listarClientes() {
-		for (Clientes cliente : listaClientes) {
-			if (listaClientes.isEmpty()) {
-				System.out.println("Nenhum cliente cadastrado até o momento. Deseja cadastrar um novo?\n"
-				+"1. Sim\n"
-				+"2. Não");
-				int menu = scanner.nextInt();
-				if (menu == 1) {
-					adicionarCliente();
-				}
-				else {
-					System.out.println("Retornando ao menu principal...");
-				}
-				return;
+		if (listaClientes.isEmpty()) {
+			System.out.println("Nenhum cliente cadastrado até o momento. Deseja cadastrar um novo?\n"
+			+"1. Sim\n"
+			+"2. Não");
+			int menu = scanner.nextInt();
+			scanner.nextLine();
+			if (menu == 1) {
+				criarCliente();
 			}
+			else {
+				System.out.println("Retornando ao menu principal...");
+			}
+			return;
+		}
+		
+		for (Clientes cliente : listaClientes) {
 			cliente.mostrarDados();
 		}
 	}
 		
 	public void mostrarCliente() {
 		System.out.println("Insira o cpf do cliente para mostrar informações: ");
+		scanner.nextLine();
 		String cpf = scanner.nextLine();
 		buscarCliente(cpf);
 		}
 	
 	public void apagarCliente() {
 		System.out.println("Insira o cpf do cliente que deseja apagar: ");
+		scanner.nextLine();
 		String cpf = scanner.nextLine();
-		
-		for (Clientes cliente : listaClientes) {
-			int cont = 0;
+			Clientes clienteEncontrado = buscarCliente(cpf);
 			
-			if (cliente.getCpf().equals(cpf)) {
-				listaClientes.remove(cliente);
+			if (clienteEncontrado != null) {
+				listaClientes.remove(clienteEncontrado);
 			}
-			return;
-		}
-		System.out.println("Segue abaixo a lista de cliente atualizada: ");
-		listarClientes();
+			else {
+				System.out.println("O cliente não foi encontrado, certifique-se que digitou o CPF corretamente.");	
+			}
 		
 	}
 	
 	public void alterarInformacao() {
 		System.out.println("Insira o CPF do cliente que deseja alterar informações: ");
+		scanner.nextLine();
 		String cpf = scanner.nextLine();
-		for (Clientes cliente : listaClientes) {
+		Clientes cliente = buscarCliente(cpf);
+			
+		if (cliente == null) {
+			return;
+		}
+			
+			
+			
 			if (cliente.getCpf().equals(cpf)) {
 				mostrarCliente();
 				System.out.println("Qual informação deseja alterar?\n"
@@ -110,25 +126,26 @@ public class GerenciadorClientes {
 								 + "5. Email\n"
 								 + "0. Sair");
 				int subMenu = scanner.nextInt();
+				scanner.nextLine();
 				
 				while (subMenu != 0) {
 				if (subMenu == 1) {
 					System.out.println("O nome atual é " + cliente.getNome() + " insira o nome para qual deseja alterar: ");
 					cliente.setNome(scanner.nextLine());
 				}
-				else if (subMenu == 3) {
+				else if (subMenu == 2) {
 					System.out.println("A data de nascimento atual é: "+ cliente.getDataNascimento() + " insira a data de nascimento para a qual deseja alterar: ");
 					cliente.setDataNascimento(scanner.nextLine());
 				}
-				else if(subMenu == 4) {
+				else if(subMenu == 3) {
 					System.out.println("O sexo atua é: "+ cliente.getSexo() + " insira o sexo para o qual deseja alterar: ");
 					cliente.setSexo(scanner.nextLine());
 				}
-				else if(subMenu == 5) {
+				else if(subMenu == 4) {
 					System.out.println("O telefone atual é: "+ cliente.getTelefone() + " insira o telefone para o qual deseja alter: ");
 					cliente.setTelefone(scanner.nextLine());
 				}
-				else if(subMenu == 6) {
+				else if(subMenu == 5) {
 					System.out.println("O email atual é: "+ cliente.getEmail() + " insira o email para o qual deseja alterar: ");
 					cliente.setEmail(scanner.nextLine());
 				}
@@ -141,6 +158,7 @@ public class GerenciadorClientes {
 						 + "5. Email\n"
 						 + "0. Sair");
 				subMenu = scanner.nextInt();
+				scanner.nextLine();
 				
 				}
 				System.out.println("Informações gravadas com sucesso! Segue abaixo os seus dados atuaizados: ");
@@ -148,7 +166,6 @@ public class GerenciadorClientes {
 			}
 			
 		}
-	}
 	
 	public void contaGerente() {
 		System.out.println("### GERÊNCIA ###\n"
@@ -164,6 +181,7 @@ public class GerenciadorClientes {
 				  		 + "9. Apagar conta\n"
 				  		 + "0. Sair");
 		int menuGerencia = scanner.nextInt();
+		scanner.nextLine();
 		
 		while (menuGerencia != 0) {
 			if (menuGerencia == 1) {
@@ -175,7 +193,7 @@ public class GerenciadorClientes {
 			}
 			
 			else if (menuGerencia == 3) {
-				adicionarCliente();
+				criarCliente();
 			}
 			
 			else if (menuGerencia == 4) {
@@ -188,7 +206,16 @@ public class GerenciadorClientes {
 				gerenciadorConta.listarContas();
 			}
 			else if (menuGerencia == 7) {
-				gerenciadorConta.conta.mostrarConta();
+				System.out.println("Insira o numero da sua conta: ");
+				String numeroConta = scanner.nextLine();
+				Contas conta = gerenciadorConta.buscarConta(numeroConta);
+				if(conta != null) {
+					conta.mostrarConta();
+				} else {
+					System.out.println("Conta não encontrada! ");
+				}
+				
+				
 			}
 			else if (menuGerencia == 8) {
 				gerenciadorConta.criarConta();
@@ -205,11 +232,16 @@ public class GerenciadorClientes {
 					 + "O que deseja executar?\n"
 			  		 + "1. Listar clientes\n"
 			  		 + "2. Mostrar dados de um cliente específico\n"
-			  		 + "3. Adiciionar clientes\n"
-			  		 + "4. Apagar cliente\n"
-			  		 + "5. Alterar informação do cliente\n"
+			  		 + "3. Alterar informações\n"
+			  		 + "4. Adicionar cliente\n"
+			  		 + "5. Apagar cliente\n"
+			  		 + "6. Listar contas\n"
+			  		 + "7. Mostrar dados de uma conta específicar\n"
+			  		 + "8. Adicionar conta\n"
+			  		 + "9. Apagar conta\n"
 			  		 + "0. Sair");
 		   menuGerencia = scanner.nextInt();
+		   scanner.nextLine();
 		}
 
 		

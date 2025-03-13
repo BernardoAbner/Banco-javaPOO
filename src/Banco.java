@@ -7,6 +7,10 @@ public class Banco {
 		Scanner scanner = new Scanner(System.in);
 		GerenciadorClientes gerenciadorClientes = new GerenciadorClientes();	
 		GerenciadorContas gerenciadorContas = new GerenciadorContas();
+		
+		gerenciadorContas.setGerenciadorClientes(gerenciadorClientes);
+		gerenciadorClientes.setGerenciadorConta(gerenciadorContas);
+																						
 		ContaCorrente corrente = new ContaCorrente();
 		ContaPoupanca poupanca = new ContaPoupanca();
 		
@@ -17,6 +21,7 @@ public class Banco {
 						 + "3. Entrar como gerente\n"
 						 + "0. Sair");
 		int menu = scanner.nextInt();
+		scanner.nextLine();
 		
 		while(menu != 0) {			
 			if (menu == 1) {
@@ -43,6 +48,7 @@ public class Banco {
 					 + "4. Encerrar conta\n"
 					 + "0. Sair");
 			menu = scanner.nextInt();
+			scanner.nextLine();
 			
 		}
 

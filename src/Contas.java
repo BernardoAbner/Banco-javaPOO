@@ -9,7 +9,7 @@ public class Contas {
 	
 	protected double valor;
 	protected double saldo;
-	protected int contaDestino;
+	protected String contaDestino;
 	protected String senha;
 	protected String numeroConta;
 	protected Clientes titular;	
@@ -31,11 +31,11 @@ public class Contas {
 		return saldo;
 	}
 	
-	public void setContaDestino(int novaContaDestino) {
+	public void setContaDestino(String novaContaDestino) {
 		this.contaDestino = novaContaDestino;
 	}	
 	
-	public int getContaDestino() {
+	public String getContaDestino() {
 		return contaDestino;
 	}
 
@@ -55,8 +55,11 @@ public class Contas {
 		return numeroConta;
 	}
 	
-	public void setTitular(Clientes clientes) {
-		this.titular = clientes;
+	public void setTitular(Clientes nome) {
+		this.titular = nome;
+	}
+	public Clientes getTitular() {
+		return titular;
 	}
 	
 	public void sacar() {
@@ -68,17 +71,18 @@ public class Contas {
 				System.out.println("O saldo atual: "+ getSaldo());
 			}
 			else {
-				setSaldo(getSaldo() + getValor());
+				setSaldo(getSaldo() - getValor());
 				System.out.println("Saldo atual após a movimentação: "+ getSaldo());
 			}
 			
 		}
 	public void depositar() {
 			System.out.println("Insira o número da conta em que deseja depositar o dinheiro: ");
-			setContaDestino(scanner.nextInt());
+			setContaDestino(scanner.nextLine());
 			
 			System.out.println("Insira o valor que deseja depositar: ");
-			setValor(scanner.nextDouble());
+			setValor(scanner.nextDouble());	
+			scanner.nextLine();
 			
 			if(valor > 0) {
 			
@@ -96,10 +100,14 @@ public class Contas {
 		}
 	
 	public void mostrarConta() { 
-		System.out.println("Saldo da conta: "+ saldo);
+		System.out.println("Saldo da conta: "+ saldo + "R$");
 		System.out.println("Numero da conta é: "+ numeroConta);
-		System.out.println("O Titular da conta é: "+ cliente.getNome());
-			
+		if(titular != null) {
+		System.out.println("O Titular da conta é: "+ titular.getNome());
+		}
+		else {
+			System.out.println("Sem titular");
+		}
 	}
 	
 		
